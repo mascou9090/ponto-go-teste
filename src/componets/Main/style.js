@@ -7,6 +7,12 @@ export const MainS = styled.main`
   a {
     text-decoration: none;
   }
+  @media (max-width:900px) {
+    align-items: center;
+    flex-direction: column;
+    margin:5rem;
+    padding:1rem;
+  }
 `;
 export const BoxCompany = styled.div`
   display: flex;
@@ -21,6 +27,7 @@ export const BoxCompany = styled.div`
   cursor: pointer;
   font-size: 2rem;
   color:blue;
+  margin:1rem;
   &:hover {
     box-shadow: 2px 2px 5px black;
     background-color: #b1daCa;

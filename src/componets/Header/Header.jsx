@@ -1,14 +1,14 @@
-import { HeaderS } from "./style";
+import { Div, HeaderS } from "./style";
 
 function Header() {
   return (
-    <div>
+    <Div>
       <h1>
         <HeaderS>
           Ponto<span>GO</span>
         </HeaderS>
       </h1>
-    </div>
+    </Div>
   );
 }
 
