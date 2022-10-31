@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormEmployees } from "./style";
 
 function Employees() {
+  //const [email, setEmail] = useState();
+
+
+
+
+
   return (
     <FormEmployees>
           <h1>Cadastro de funcionário</h1>
