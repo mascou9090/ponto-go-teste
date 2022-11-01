@@ -7,5 +7,6 @@ export const FormEmployees = styled(FormCompany)`
   }
   button {
     width: 320px;
+    margin-bottom: 2rem;
   }
 `;
