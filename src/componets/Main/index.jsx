@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { BoxCompany, BoxEmployees, MainS } from "./style";
+import { BoxNovos, BoxVeteranos, MainS } from "./style";
 
 function Main() {
   return (
     <MainS>
-      <Link to="/company">
-        <BoxCompany>Companys</BoxCompany>
+      <Link to="/cadastro">
+        <BoxNovos>Cadastrar</BoxNovos>
       </Link>
-      <Link to="/employees">
-        <BoxEmployees>Employees</BoxEmployees>
+      <Link to="/AddPoint">
+        <BoxVeteranos>Logar</BoxVeteranos>
       </Link>
     </MainS>
   );

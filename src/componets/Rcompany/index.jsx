@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { FormCompany } from "./style";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useMyHook } from "../../context";
 
 //Schema de validações de formulário
 const schema = yup
@@ -23,17 +24,18 @@ const schema = yup
       .required("O email é obrigatorio"),
     cnpj: yup
       .string()
-      .min(11, "O número precisa ter 11 digitos")
+      .min(14, "O número precisa ter 14 digitos")
       .max(14, "O número precisa ter 14 digitos")
       .required("Campo obrigatorio"),
     socialreason: yup.string().required(),
   })
   .required();
+    
+  function Companys() {
+  const {postCompany} = useMyHook();
 
-const url = "https://pontogo-api.herokuapp.com/register-company";
+  
 
-function Companys() {
-  const [company, setCompany] = useState(null);
   //Paramentros do useForm
   const {
     register,
@@ -45,25 +47,12 @@ function Companys() {
   
 
   const onSubmit = (data) => {
-    console.log(data);
-    setCompany(data);
-    console.log(company);
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Authorization": "E09FBC2D-C866-4FEF-94F5-CD5738418454",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(company),
-    })
-      .then((r) => r.json())
-      .then((r) => console.log(r))
-      .catch((error) => console.log(error));
+    postCompany(data)
   };
 
   return (
     <div>
-      <FormCompany>
+      <FormCompany >
         <h1>Cadastro de empresa</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label>

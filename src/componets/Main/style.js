@@ -14,13 +14,13 @@ export const MainS = styled.main`
     padding:1rem;
   }
 `;
-export const BoxCompany = styled.div`
+export const BoxNovos = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   border:0.2px solid #aaa;
-  width:18rem;
-  height:10rem;
+  width:12rem;
+  height:8rem;
   background-color: #B4EBCA;
   border-radius: 0.8rem;
   transition: 0.5s;
@@ -33,7 +33,7 @@ export const BoxCompany = styled.div`
     background-color: #b1daCa;
   }
 `;
-export const BoxEmployees = styled(BoxCompany)`
+export const BoxVeteranos = styled(BoxNovos)`
   background-color: #D9F2B4;
   &:hover {
     background-color: #e9f2B4;

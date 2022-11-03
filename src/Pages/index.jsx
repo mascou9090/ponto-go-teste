@@ -1,13 +1,13 @@
-import Header from '../componets/Header/Header';
-import Rotas from '../routes';
+import Header from "../componets/Header/Header";
+import Rotas from "../routes";
 
 function Page() {
   return (
     <>
-      <Header/>
+      <Header />
       <Rotas />
     </>
-  )
+  );
 }
 
 export default Page;

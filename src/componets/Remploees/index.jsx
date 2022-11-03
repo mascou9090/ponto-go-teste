@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { FormEmployees } from "./style";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useMyHook } from "../../context";
 
 //Schema de validações de formulário
 const schema = yup
@@ -23,19 +24,33 @@ const schema = yup
       .required("O email é obrigatorio"),
     cpf: yup
       .string()
-      .min(11, "O número precisa ter 11 digitos")
-      .max(11, "O número precisa ter 11 digitos")
+      .min(11, "O cpf precisa ter 11 digitos")
+      .max(11, "O cpf precisa ter 11 digitos")
+      .required("O número de cpf é preciso"),
+    pis: yup
+      .string()
+      .min(12, "O pis precisa ter 12 digitos")
+      .max(12, "O pis precisa ter 12 digitos")
       .required("Campo obrigatorio"),
-    birthday: yup.date().required("Informe uma data válida"),
-    admissionDate: yup.date("Informe uma data válida").required("Campo obrigatório"),
+    birthday: yup
+      .date()
+      .typeError("Coloque uma data válida")
+      .required("Informe uma data válida"),
+    admissionDate: yup
+      .date("Informe uma data válida")
+      .typeError("Coloque uma data válida")
+      .required("Campo obrigatório"),
     register: yup.string(),
-    companyAdmissionDate: yup.date("Informe uma data válida").required("Campo obrigatório"),
-    clt: yup.boolean()
+    companyAdmissionDate: yup
+      .date("Informe uma data válida")
+      .typeError("Coloque uma data válida")
+      .required("Campo obrigatório"),
+    clt: yup.boolean(),
   })
   .required();
 
-function Companys() {
-  const [company, setCompany] = useState(null);
+function Employee() {
+  const { postEmployee} = useMyHook();
 
   // Parans ReactForm
   const {
@@ -46,24 +61,25 @@ function Companys() {
     resolver: yupResolver(schema),
   });
   const onSubmit = (data) => {
-    try {
-      setCompany(data);
-      console.log(company);
-    } catch(err) {
-      console.log(err, 'err')
-    }
-/* 
-    fetch("https://pontogo-api.herokuapp.com/register-company", {
-      method: "POST",
-      headers: {
-        Authorization: "E09FBC2D-C866-4FEF-94F5-CD5738418454",
-        "Content-type": "application/json; charset=UTF-8",
-      },
-      body: JSON.stringify(company),
+    const jsonData = JSON.stringify({
+      "disableMandril": true,
+      "employees": [
+        {
+          "email": data.email,
+          "cpf": data.cpf,
+          "firstName": data.firstname,
+          "lastName": data.lastname,
+          "admissionDate": data.admissionDate,
+          "birthdate": data.birthday,
+          "registration": data.register,
+          "pis": data.pis,
+          "pointWithPicture": false,
+          "companyAdmissionDate": data.companyAdmissionDate,
+          "clt": data.clt,
+        },
+      ],
     })
-      .then((response) => response.json())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error)); */
+    postEmployee(jsonData);
   };
 
   return (
@@ -77,7 +93,7 @@ function Companys() {
             {<span>{errors.firstname?.message}</span>}
           </label>
           <label>
-            Segundo Nome:
+            Segundo nome:
             <input type="text" {...register("lastname")} />
             {<span>{errors.lastname?.message}</span>}
           </label>
@@ -107,13 +123,18 @@ function Companys() {
             {<span>{errors.register?.message}</span>}
           </label>
           <label>
+            Pis:
+            <input type="text" {...register("pis")} />
+            {<span>{errors.pis?.message}</span>}
+          </label>
+          <label>
             Data de contratação:
             <input type="date" {...register("companyAdmissionDate")} />
             {<span>{errors.companyAdmissionDate?.message}</span>}
           </label>
           <div>
             <label style={{ flexDirection: "row" }}>
-             CLT:
+              CLT:
               <input
                 style={{ width: "25px" }}
                 type="checkbox"
@@ -128,4 +149,4 @@ function Companys() {
   );
 }
 
-export default Companys;
+export default Employee;
