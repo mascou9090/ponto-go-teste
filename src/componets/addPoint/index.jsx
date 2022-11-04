@@ -12,7 +12,6 @@ function AddPoint() {
 
   const handleAddPoint = () => {
     const stringData = timeNow.toISOString();
-    console.log(stringData);
 
     const datas = {
       "date": stringData,
@@ -30,7 +29,6 @@ function AddPoint() {
 
     //POST AddPoint
     postPoint(resDatasPoint);
-    console.log(resDatasPoint)
   };
 
   const handleShowPoint = () => {
