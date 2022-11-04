@@ -5,6 +5,10 @@ const GlobalContext = createContext({});
 export const Context = ({ children }) => {
   const [tokenCompany, setTokenCompany] = useState();
   const [tokenEmployee, setTokenEmployee] = useState();
+  const [pointsCatch, setPointsCatch] = useState();
+
+
+  const timeNow = new Date();
 
   //POST Company
   const postCompany = async (data) => {
@@ -13,7 +17,7 @@ export const Context = ({ children }) => {
     await fetch(url, {
       method: "POST",
       headers: {
-        "Authorization": "E09FBC2D-C866-4FEF-94F5-CD5738418454",
+        Authorization: "E09FBC2D-C866-4FEF-94F5-CD5738418454",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
@@ -22,6 +26,7 @@ export const Context = ({ children }) => {
       .then((json) => {
         console.log(json);
         setTokenCompany(json);
+        alert("Empresa criada!");
       })
       .catch((error) => console.log(error));
   };
@@ -30,22 +35,24 @@ export const Context = ({ children }) => {
   const postEmployee = (data) => {
     const url = `https://pontogo-api.herokuapp.com/register-employees?company-token-pg=${tokenCompany.companyId}`;
 
+
+
     fetch(url, {
       method: "POST",
       headers: {
-        "Authorization": "E09FBC2D-C866-4FEF-94F5-CD5738418454",
-        "Content-type": "application/json; charset=UTF-8",
+        Authorization: "E09FBC2D-C866-4FEF-94F5-CD5738418454",
+        "Content-Type": "application/json",
       },
       body: data,
     })
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        setTokenEmployee(result)
+        setTokenEmployee(result);
+        alert("Funcionário criado!");
       })
       .catch((error) => console.log("error", error));
   };
-
 
   //POST AddPoint
   const postPoint = (data) => {
@@ -54,7 +61,7 @@ export const Context = ({ children }) => {
     fetch(url, {
       method: "POST",
       headers: {
-        "Authorization": "E09FBC2D-C866-4FEF-94F5-CD5738418454",
+        Authorization: "E09FBC2D-C866-4FEF-94F5-CD5738418454",
         "Content-type": "application/json; charset=UTF-8",
       },
       body: data,
@@ -62,16 +69,74 @@ export const Context = ({ children }) => {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        setTokenEmployee(result)
+        alert("Ponto batido!");
+      })
+      .catch((error) => {
+        console.log("error", error);
+        alert("Algo errado aconteceu!");
+      });
+  };
+
+  
+
+
+  //GET Point
+  const getPoints = () => {
+
+    const day = timeNow.getDate();
+    const month = timeNow.getMonth() + 1;
+    const year = timeNow.getFullYear();
+
+    const today = day > 9 ? day : `0${day}`;
+    const thisMonth = month > 9 ? month : `0${month}`;
+
+    const days = [today,thisMonth,year].join("/");
+
+
+    const url = `https://pontogo-api.herokuapp.com/get-points?initialDate=${days}&endDate=04/11/2022&company-token-pg=${tokenCompany.companyId}&employee-token-pg=${tokenEmployee.employees[0].id}`;
+
+    
+    fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: "E09FBC2D-C866-4FEF-94F5-CD5738418454",
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {   
+        console.log(result);
+        setPointsCatch(result);
       })
       .catch((error) => console.log("error", error));
   };
 
-
-
+  const realTime = (time) => {
+      const timeNow = new Date(time)
+      const timeH = timeNow.getHours() > 9 ? timeNow.getHours() : `0${timeNow.getHours()}` ;
+      const timeM = timeNow.getMinutes() > 9 ? timeNow.getMinutes() : `0${timeNow.getMinutes()}`;
+      const timeS = timeNow.getSeconds() > 9 ? timeNow.getSeconds() : `0${timeNow.getSeconds()}`;
+  
+      const timeNowFull = [timeH, timeM, timeS].join(":");
+      return timeNowFull;
+  }
+  
+  
 
   return (
-    <GlobalContext.Provider value={{ postCompany, tokenCompany, postEmployee, tokenEmployee, postPoint }}>
+    <GlobalContext.Provider
+      value={{
+        postCompany,
+        tokenCompany,
+        postEmployee,
+        tokenEmployee,
+        postPoint,
+        getPoints,
+        pointsCatch,
+        timeNow,
+        realTime
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   );

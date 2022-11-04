@@ -1,43 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
 import { useMyHook } from "../../context";
-import { ButtonAddPoint, ButtonShowPoint, ComponentPoint } from "./style";
+import {
+  ButtonAddPoint,
+  ButtonShowPoint,
+  ComponentPoint,
+  DivShow,
+} from "./style";
 
 function AddPoint() {
-  const [timePoint, setTimePoint] = useState();
-  const { postPoint } = useMyHook();
-
-  const datas = {
-    date: timePoint,
-    latitude: null,
-    longitude: null,
-    userData: {
-      device: "iPhone 13",
-      gatewayMac: null,
-      ip: "192.168.15.13",
-      operatingSystem: "iOS",
-    },
-  };
+  const { postPoint, getPoints, pointsCatch, timeNow, realTime } = useMyHook();
 
   const handleAddPoint = () => {
-    const timeNow = new Date("0000-00-00T00:00:00.0000000Z");
-    const horaAtual = timeNow
-    setTimePoint(horaAtual);
-    console.log(timePoint);
-    console.log(datas);
-  }
+    const stringData = timeNow.toISOString();
+    console.log(stringData);
+
+    const datas = {
+      "date": stringData,
+      "latitude": null,
+      "longitude": null,
+      "userData": {
+        "device": "iPhone 13",
+        "gatewayMac": null,
+        "ip": "192.168.15.13",
+        "operatingSystem": "iOS",
+      },
+    };
+
+    const resDatasPoint = JSON.stringify(datas);
+
+    //POST AddPoint
+    postPoint(resDatasPoint);
+    console.log(resDatasPoint)
+  };
+
+  const handleShowPoint = () => {
+    getPoints();
+  };
 
   return (
-    <ComponentPoint>
-      <ButtonAddPoint onClick={handleAddPoint}>Bater Ponto</ButtonAddPoint>
-      <ButtonShowPoint>Espelho de Ponto</ButtonShowPoint>
-    </ComponentPoint>
+    <>
+      <ComponentPoint>
+        <ButtonAddPoint onClick={handleAddPoint}>Bater Ponto</ButtonAddPoint>
+        <ButtonShowPoint onClick={handleShowPoint}>
+          Espelho de Ponto
+        </ButtonShowPoint>
+      </ComponentPoint>
+      <DivShow>
+        <ul>
+          {pointsCatch &&
+            pointsCatch.map((el) => <li key={el.id}>{realTime(el.date)}</li>)}
+        </ul>
+      </DivShow>
+    </>
   );
 }
 
 export default AddPoint;
-
-
-
-
-
-

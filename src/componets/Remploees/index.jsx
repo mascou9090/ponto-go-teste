@@ -50,8 +50,7 @@ const schema = yup
   .required();
 
 function Employee() {
-  const { postEmployee} = useMyHook();
-
+  const { postEmployee } = useMyHook();
   // Parans ReactForm
   const {
     register,
@@ -60,26 +59,39 @@ function Employee() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data) => {
-    const jsonData = JSON.stringify({
+
+  const onSubmit = ({
+    email,
+    cpf,
+    firstname,
+    lastname,
+    birthday,
+    admissionDate,
+    register,
+    companyAdmissionDate,
+    clt,
+    pis,
+  }) => {
+    const jsonData = {
       "disableMandril": true,
       "employees": [
-        {
-          "email": data.email,
-          "cpf": data.cpf,
-          "firstName": data.firstname,
-          "lastName": data.lastname,
-          "admissionDate": data.admissionDate,
-          "birthdate": data.birthday,
-          "registration": data.register,
-          "pis": data.pis,
-          "pointWithPicture": false,
-          "companyAdmissionDate": data.companyAdmissionDate,
-          "clt": data.clt,
-        },
-      ],
-    })
-    postEmployee(jsonData);
+          {
+              "email": email,
+              "cpf": cpf,
+              "firstName": firstname,
+              "lastName": lastname,
+              "admissionDate": admissionDate,
+              "birthdate": birthday,
+              "registration": register,
+              "pis": pis,
+              "pointWithPicture": false,
+              "companyAdmissionDate": companyAdmissionDate,
+              "clt": clt
+          }
+      ]
+  }
+
+    postEmployee(JSON.stringify(jsonData));
   };
 
   return (
