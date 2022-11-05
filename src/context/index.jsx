@@ -84,6 +84,7 @@ export const Context = ({ children }) => {
   const getPoints = () => {
 
     const day = timeNow.getDate();
+
     const month = timeNow.getMonth() + 1;
     const year = timeNow.getFullYear();
 
@@ -93,7 +94,7 @@ export const Context = ({ children }) => {
     const days = [today,thisMonth,year].join("/");
 
 
-    const url = `https://pontogo-api.herokuapp.com/get-points?initialDate=${days}&endDate=04/11/2022&company-token-pg=${tokenCompany.companyId}&employee-token-pg=${tokenEmployee.employees[0].id}`;
+    const url = `https://pontogo-api.herokuapp.com/get-points?initialDate=${days}&endDate=${days}&company-token-pg=${tokenCompany.companyId}&employee-token-pg=${tokenEmployee.employees[0].id}`;
 
     
     fetch(url, {
