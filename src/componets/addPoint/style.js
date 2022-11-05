@@ -25,13 +25,18 @@ export const ComponentPoint = styled.div`
 
 export const DivShow = styled.div`
   display: flex;
+  border-radius: 4px;
   flex-direction: column;
   align-items: center;
-  transition:2s;
+  width:12rem;
+  margin: 0 auto;
+  background-color:white;
   ul {
+    background-color:white;
     list-style: none;
     li {
       margin:1rem;
+      background-color:white;
     }
   }
 `;
