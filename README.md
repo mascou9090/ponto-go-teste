@@ -38,7 +38,6 @@ $ npm run dev
 ![Html5](https://img.shields.io/badge/-Html5-DD4B25?style=flat-square&logo=Html5&logoColor=white)
 ![React](https://img.shields.io/badge/-React-black?style=flat-square&logo=React&logoColor=2F74C0)
 ![Styled-components](https://img.shields.io/badge/-Styled%20Components-pink?style=flat-square&logo=styled-components)
-![Typescript](https://img.shields.io/badge/-Typescript-gray?style=flat-square&logo=Typescript&logoColor=2F74C0)
 ![Yup](https://img.shields.io/badge/-Yup-red?style=flat-square&logo=Yup&logoColor=2F74C0)
 
 
